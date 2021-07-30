@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <h1>Hangman</h1>
+    </head>
+    <body>
+        <p> Let's play the word guessing game!</p>
+        <p>Refresh this page to start a new game.</p>
+        <script>
+            //Define word list
+            var words = ["javascript", "awesome", "pancake", "monkey", "hangman"];
+
+            //pick random word from the list
+            var word = words[Math.floor(Math.random() * words.length)];
+
+            //Build the blank string
+            var guessArray = [];
+            for (var i=0; i<word.length; i++) {
+                guessArray[i]="_";
+            }
+
+            //define remaining letter count
+            var remainingLetters = word.length;
+            
+            //guess limit
+            var guessLimit = 5;
+
+            //Define the loop to run game play
+            while(remainingLetters > 0 && guessLimit > 0) {
+                //Show current letters
+                alert(guessArray.join(" "));
+                let guessVar = false;
+                //Take a guess
+                var guess = prompt("Guess a letter! Click on cancel to exit game. You have " + remainingLetters + " letters remaining.");
+
+                //Validate guess entry
+                if(guess === null) {
+                    break;
+                }
+                else if(guess.length !== 1) {
+                    alert("Please guess a single letter!");
+                }
+                else {
+                    //Check if guess exists in the word
+                    for(var j=0; j<word.length;j++) {
+                        if(guess.toLowerCase() === word[j]) {
+                            if (guessArray[j] === "_") {
+                                //For accurate guess, enter letter to the word
+                                guessArray[j]=guess.toLowerCase();
+                                //update remaining letter count for the loop to end
+                                remainingLetters--;
+                            }
+                            guessVar = true;
+                        }
+                    }
+                }
+                if(guessVar === false) {
+                    guessLimit--;
+                } 
+            }
+
+            if(guessLimit===0) {
+                alert("You lost! Try again. The correct word was - " + word);
+            }
+            else {
+                //Congratulate the user on success
+                alert("The correct word is - " + word);
+            }
+        </script>
+    </body>
+</html>
